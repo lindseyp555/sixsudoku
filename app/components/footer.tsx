@@ -1,5 +1,7 @@
 export const Footer = () => {
     return (
-        <p> Lindsey Peterson, 2026</p>
+        <div className="flex p-10 text-gray-400">
+            <p> Lindsey Peterson, 2026</p>
+        </div>
     )
 }
