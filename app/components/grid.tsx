@@ -1,14 +1,18 @@
 import React from "react";
 
-export const Grid = () => {
+interface GridProps {
+  puzzle: string[][];
+}
+
+export const Grid = ({puzzle}: GridProps) => {
   const rows = 6;
   const cols = 6;
 
   return (
     <div className="inline-block border-2 border-gray-800">
-      {Array.from({ length: rows }).map((_, row) => (
+      {puzzle.map((rowData, row) => (
         <div className="flex" key={row}>
-          {Array.from({ length: cols }).map((_, col) => {
+          {rowData.map((cell, col) => {
             // Determine bold borders for 2x3 sub-boxes
             const borderTop = row % 3 === 0 ? "border-t-2" : "border-t-0.5";
             const borderLeft = col % 2 === 0 ? "border-l-2" : "border-l-0.5";
@@ -27,7 +31,7 @@ export const Grid = () => {
                   isShaded ? "bg-gray-400 dark:bg-gray-800" : ""
                 }`}
               >
-                {/* Optional number goes here */}
+                {cell}
               </div>
             );
           })}

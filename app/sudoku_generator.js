@@ -124,10 +124,10 @@ function removeNumbersUnique(board, maxRemovals = 14) {
   }
 }
 
-function generatePuzzle(maxRemovals = 14) {
+export function generatePuzzle(maxRemovals = 24) {
   const board = generateFullBoard();
   removeNumbersUnique(board, maxRemovals);
-  return board;
+  return board.map(row => row.map(n => (n === 0 ? "" : n.toString())));
 }
 
 function printBoard(board) {
