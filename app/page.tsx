@@ -13,7 +13,9 @@ export default function Home() {
   const [puzzle, setPuzzle] = useState<string[][]>([]);
   useEffect(() => {
     setPuzzle(generatePuzzle());
-  }, []);
+    }, []);
+  const clues = puzzle.map(row => row.map(cell => cell !== ""));
+
   const handleNewGame = () => {
     setPuzzle(generatePuzzle());
   };
@@ -21,7 +23,7 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
       <Header onClick={handleNewGame}/>
-      <Grid puzzle={puzzle}/>
+      <Grid puzzle={puzzle} setPuzzle={setPuzzle} clues={clues}/>
       <Footer/>
     </div>
   );

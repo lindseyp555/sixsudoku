@@ -2,11 +2,22 @@ import React from "react";
 
 interface GridProps {
   puzzle: string[][];
+  setPuzzle:  React.Dispatch<React.SetStateAction<string[][]>>;
+  clues: boolean[][];
 }
 
-export const Grid = ({puzzle}: GridProps) => {
+export const Grid = ({ puzzle, setPuzzle, clues }: GridProps) => {
   const rows = 6;
   const cols = 6;
+
+  const handleCellChange = (e: React.ChangeEvent<HTMLInputElement>, row: number, col: number) => {
+    var newArray = [];
+    for (var i = 0; i < puzzle.length; i++) {
+      newArray[i] = puzzle[i].slice();
+    }
+    newArray[row][col] = e.target.value;
+    setPuzzle(newArray);
+  };
 
   return (
     <div className="inline-block border-2 border-gray-800">
@@ -25,14 +36,19 @@ export const Grid = ({puzzle}: GridProps) => {
             const isShaded = (rowBlock + colBlock) % 2 === 0;
 
             return (
-              <div
+              <input 
                 key={`${row}-${col}`}
-                className={`${borderTop} ${borderLeft} ${borderRight} ${borderBottom} border-gray-400 w-12 h-12 flex items-center justify-center ${
-                  isShaded ? "bg-gray-400 dark:bg-gray-800" : ""
+                onChange={(e) => handleCellChange(e, row, col)}
+                disabled={clues[row][col]}
+                className={`
+                  ${borderTop} ${borderLeft} ${borderRight} ${borderBottom} text-center border-gray-400 w-12 h-12 flex items-center justify-center 
+                  ${isShaded ? "bg-gray-400 dark:bg-gray-800" : ""}
+                  ${clues[row][col] ? "text-blue-400" : "text-white"}
+                  disabled:text-blue-400
+                  
                 }`}
-              >
-                {cell}
-              </div>
+                value={cell}
+              />
             );
           })}
         </div>
