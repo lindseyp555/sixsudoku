@@ -4,19 +4,22 @@ interface GridProps {
   puzzle: string[][];
   setPuzzle:  React.Dispatch<React.SetStateAction<string[][]>>;
   clues: boolean[][];
+  solution: number[][];
 }
 
-export const Grid = ({ puzzle, setPuzzle, clues }: GridProps) => {
+export const Grid = ({ puzzle, setPuzzle, clues, solution }: GridProps) => {
   const rows = 6;
   const cols = 6;
 
   const handleCellChange = (e: React.ChangeEvent<HTMLInputElement>, row: number, col: number) => {
+    if (/^[1-9]$|^$|^ $/.test(e.target.value)) {
     var newArray = [];
     for (var i = 0; i < puzzle.length; i++) {
       newArray[i] = puzzle[i].slice();
     }
     newArray[row][col] = e.target.value;
     setPuzzle(newArray);
+    }
   };
 
   return (

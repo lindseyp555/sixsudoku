@@ -125,9 +125,15 @@ function removeNumbersUnique(board, maxRemovals = 14) {
 }
 
 export function generatePuzzle(maxRemovals = 24) {
-  const board = generateFullBoard();
+  const fullBoard = generateFullBoard();
+  const board = fullBoard.map(row => [...row]);
   removeNumbersUnique(board, maxRemovals);
-  return board.map(row => row.map(n => (n === 0 ? "" : n.toString())));
+    return {
+    puzzle: board.map(row =>
+      row.map(n => (n === 0 ? "" : n.toString()))
+    ),
+    solution: fullBoard
+  };
 }
 
 function printBoard(board) {
