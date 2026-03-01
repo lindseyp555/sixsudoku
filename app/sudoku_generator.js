@@ -116,7 +116,9 @@ function removeNumbersUnique(board, maxRemovals = 14) {
     const backup = board[row][col];
     board[row][col] = 0;
 
-    if (countSolutions(board) !== 1) {
+    const boardCopy = board.map(r => [...r]);
+
+    if (countSolutions(boardCopy) !== 1) {
       board[row][col] = backup;
     } else {
       removed++;
@@ -132,7 +134,7 @@ export function generatePuzzle(maxRemovals = 24) {
     puzzle: board.map(row =>
       row.map(n => (n === 0 ? "" : n.toString()))
     ),
-    solution: fullBoard
+    solution: fullBoard.map(row => [...row])
   };
 }
 
