@@ -18,12 +18,24 @@ export default function Home() {
     handleNewGame();
     }, []);
 
-  const handleNewGame = () => {
-    const { puzzle: newPuzzle, solution: newSolution } = generatePuzzle() as {puzzle: string[][]; solution: number[][]};
-    setPuzzle(newPuzzle);
-    setSolution(newSolution);
-    setClues(newPuzzle.map(row => row.map(cell => cell !== "")));
-  };
+const handleNewGame = () => {
+  const hasUserInput = puzzle.some((row, r) =>
+    row.some((cell, c) => !clues[r]?.[c] && cell !== "")
+  );
+
+  if (hasUserInput) {
+    const confirmed = window.confirm(
+      "Start a new game?"
+    );
+    if (!confirmed) return;
+  }
+
+  const { puzzle: newPuzzle, solution: newSolution } = generatePuzzle();
+
+  setPuzzle(newPuzzle);
+  setSolution(newSolution);
+  setClues(newPuzzle.map(row => row.map(cell => cell !== "")));
+};
 
   return (
     <div className="flex flex-col min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
